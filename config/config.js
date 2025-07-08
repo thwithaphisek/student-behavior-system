@@ -4,7 +4,7 @@ const CONFIG = {
     GITHUB: {
         OWNER: 'thwithaphisek',                    // ✅ ชื่อผู้ใช้ GitHub ของคุณ
         REPO: 'student-behavior-system',           // ✅ ชื่อ Repository
-        TOKEN: 'YOUR_TOKEN_HERE',            // ⬅️ ใส่ Personal Access Token ของคุณ
+        TOKEN: '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',            // ⬅️ ใส่ Personal Access Token ของคุณ
         
         // สำหรับ GitHub Projects v2
         PROJECT_V2_ID: 'PVT_kwHODQgXXc4A9YAX',    // ✅ Project V2 ID ที่ได้จาก GraphQL
