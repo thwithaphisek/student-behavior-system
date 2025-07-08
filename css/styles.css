@@ -487,11 +487,6 @@ textarea {
     100% { transform: rotate(360deg); }
 }
 
-@keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-}
-
 /* Responsive Design */
 @media (max-width: 768px) {
     .container {
@@ -547,42 +542,6 @@ textarea {
     
     .form-container, .search-container, .password-container {
         padding: 0 10px;
-    }
-}
-
-/* Print Styles */
-@media print {
-    body {
-        background: white;
-        color: black;
-    }
-    
-    .nav-menu, .admin-actions {
-        display: none;
-    }
-    
-    .section {
-        box-shadow: none;
-        border: 1px solid #ddd;
-    }
-}
-
-/* Dark Mode Support */
-@media (prefers-color-scheme: dark) {
-    .section {
-        background: #2d3748;
-        color: #e2e8f0;
-    }
-    
-    input, select, textarea {
-        background: #4a5568;
-        color: #e2e8f0;
-        border-color: #718096;
-    }
-    
-    .record-card {
-        background: #4a5568;
-        color: #e2e8f0;
     }
 }
 
