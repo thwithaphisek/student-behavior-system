@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบลงทะเบียนพฤติกรรมความดี</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌟</text></svg>">
+    <meta name="description" content="ระบบลงทะเบียนและติดตามพฤติกรรมความดีของนักเรียน">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌟 ระบบลงทะเบียนพฤติกรรมความดี 🌟</h1>
+        </header>
+        
+        <nav class="nav-menu">
+            <button class="nav-btn active" onclick="showSection('register')" data-section="register">
+                📝 ลงทะเบียน
+            </button>
+            <button class="nav-btn" onclick="showSection('status')" data-section="status">
+                🔍 ตรวจสอบสถานะ
+            </button>
+            <button class="nav-btn" onclick="showSection('admin')" data-section="admin">
+                👨‍💼 ผู้ดูแลระบบ
+            </button>
+        </nav>
+
+        <!-- Loading Overlay -->
+        <div id="loadingOverlay" class="loading-overlay">
+            <div class="loading-spinner"></div>
+            <p id="loadingText">กำลังดำเนินการ...</p>
+        </div>
+
+        <!-- ส่วนลงทะเบียน -->
+        <section id="register" class="section active">
+            <h2>📝 ลงทะเบียนพฤติกรรมความดี</h2>
+            <form id="registerForm" class="form-container">
+                <div class="form-group">
+                    <label for="studentId">🆔 รหัสนักเรียน:</label>
+                    <input type="text" id="studentId" name="studentId" required 
+                           placeholder="กรอกรหัสนักเรียน" maxlength="10">
+                </div>
+                
+                <div class="form-group">
+                    <label for="studentNumber">🔢 เลขที่:</label>
+                    <input type="number" id="studentNumber" name="studentNumber" required 
+                           placeholder="กรอกเลขที่" min="1" max="50">
+                </div>
+                
+                <div class="form-group">
+                    <label for="fullName">👤 ชื่อ-นามสกุล:</label>
+                    <input type="text" id="fullName" name="fullName" required 
+                           placeholder="กรอกชื่อ-นามสกุล" maxlength="100">
+                </div>
+                
+                <div class="form-group">
+                    <label for="classroom">🏫 ห้อง:</label>
+                    <select id="classroom" name="classroom" required>
+                        <option value="">เลือกห้องเรียน</option>
+                        <!-- จะถูกสร้างโดย JavaScript -->
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="goodBehavior">✨ พฤติกรรมความดี:</label>
+                    <textarea id="goodBehavior" name="goodBehavior" required 
+                              placeholder="อธิบายพฤติกรรมความดีที่นักเรียนแสดงออก" 
+                              rows="4" maxlength="500"></textarea>
+                    <small class="char-counter">0/500 ตัวอักษร</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="score">⭐ คะแนนที่ได้รับ:</label>
+                    <select id="score" name="score" required>
+                        <option value="">เลือกคะแนน</option>
+                        <option value="1">1 คะแนน - ดี</option>
+                        <option value="2">2 คะแนน - ดีมาก</option>
+                        <option value="3">3 คะแนน - ดีเยี่ยม</option>
+                        <option value="4">4 คะแนน - ยอดเยี่ยม</option>
+                        <option value="5">5 คะแนน - เป็นแบบอย่าง</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="teacherName">👨‍🏫 ลงชื่อ ครู/บุคลากร:</label>
+                    <input type="text" id="teacherName" name="teacherName" required 
+                           placeholder="กรอกชื่อครู/บุคลากร" maxlength="100">
+                </div>
+                
+                <button type="submit" class="submit-btn">
+                    📤 ส่งข้อมูล
+                </button>
+            </form>
+            <div id="registerMessage" class="message-container"></div>
+        </section>
+
+        <!-- ส่วนตรวจสอบสถานะ -->
+        <section id="status" class="section">
+            <h2>🔍 ตรวจสอบสถานะ</h2>
+            <div class="search-container">
+                <div class="form-group">
+                    <label for="searchStudentId">🆔 รหัสนักเรียน:</label>
+                    <input type="text" id="searchStudentId" 
+                           placeholder="กรอกรหัสนักเรียนเพื่อค้นหา" maxlength="10">
+                </div>
+                <button onclick="searchStatus()" class="search-btn">
+                    🔍 ค้นหา
+                </button>
+            </div>
+            <div id="statusResult" class="result-container"></div>
+        </section>
+
+        <!-- ส่วนผู้ดูแลระบบ -->
+        <section id="admin" class="section">
+            <h2>👨‍💼 ผู้ดูแลระบบ</h2>
+            
+            <div id="adminLogin" class="admin-login">
+                <div class="password-container">
+                    <div class="form-group">
+                        <label for="adminPassword">🔐 รหัสผ่าน:</label>
+                        <input type="password" id="adminPassword" 
+                               placeholder="กรอกรหัสผ่านผู้ดูแลระบบ">
+                    </div>
+                    <button onclick="adminLogin()" class="login-btn">
+                        🔐 เข้าสู่ระบบ
+                    </button>
+                </div>
+                <div id="adminLoginMessage" class="message-container"></div>
+            </div>
+
+            <div id="adminPanel" class="admin-panel">
+                <div class="stats-grid">
+                    <div class="stat-card total">
+                        <div class="stat-number" id="totalRecords">0</div>
+                        <div class="stat-label">จำนวนทั้งหมด</div>
+                    </div>
+                    <div class="stat-card approved">
+                        <div class="stat-number" id="approvedRecords">0</div>
+                        <div class="stat-label">อนุมัติแล้ว</div>
+                    </div>
+                    <div class="stat-card pending">
+                        <div class="stat-number" id="pendingRecords">0</div>
+                        <div class="stat-label">รออนุมัติ</div>
+                    </div>
+                    <div class="stat-card rejected">
+                        <div class="stat-number" id="rejectedRecords">0</div>
+                        <div class="stat-label">ไม่อนุมัติ</div>
+                    </div>
+                </div>
+
+                <div class="admin-actions">
+                    <button onclick="exportToExcel()" class="export-btn">
+                        📊 ส่งออกข้อมูล Excel
+                    </button>
+                    <button onclick="refreshData()" class="refresh-btn">
+                        🔄 อัปเดตข้อมูล
+                    </button>
+                    <button onclick="adminLogout()" class="logout-btn">
+                        🚪 ออกจากระบบ
+                    </button>
+                </div>
+
+                <div id="adminRecords" class="records-container"></div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Scripts -->
+    <script src="config/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/github-api.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
